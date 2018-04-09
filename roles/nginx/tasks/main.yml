@@ -7,6 +7,8 @@
       update_cache: true
   notify:
       - Start Nginx
+# FIXME: This task may require /etc/nginx to be empty/absent.  Probably need to
+# make ansible ensure that before running this task.
 - name: Pull Chiglug Nginx config
   git:
       repo: https://github.com/chicagolug/chicagolug-nginx.git
