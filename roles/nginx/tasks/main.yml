@@ -2,7 +2,7 @@
 # tasks file for nginx
 - name: Install Nginx
   yum:
-      name: nginx
+      name: nginx # Does this live in EPEL?  Maybe need that repo installed.
       state: present
       update_cache: true
   notify:
