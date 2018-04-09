@@ -10,4 +10,4 @@
 - name: Pull Chiglug Nginx config
   git:
       repo: https://github.com/chicagolug/chicagolug-nginx.git
-      dest: /home/david/Documents/Code/chiglug/ansible-infra/workspace/chicagolug-nginx-test
+      dest: /etc/nginx
