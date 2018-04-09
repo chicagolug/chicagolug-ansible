@@ -23,9 +23,9 @@ Example Playbook
 License
 -------
 
-BSD
+Part of Chicago Linux User Group ansible project.
 
 Author Information
 ------------------
 
-David Breese <dabreese00@gmail.com>
+Part of Chicago Linux User Group ansible project.
