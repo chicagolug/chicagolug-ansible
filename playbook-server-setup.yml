@@ -1,0 +1,5 @@
+- hosts: servers
+  vars:
+  - automatic_updates: true
+  roles:
+  - auto-updates
