@@ -7,11 +7,23 @@
       update_cache: true
 - name: Ensure nginx is installed
   yum:
-      name: nginx # Does this live in EPEL?  Maybe need that repo installed.
+      name: nginx
       state: present
       update_cache: true
   notify:
       - Start Nginx
+# TODO: The below tasks are not idempotent, they will show as "changed" even
+# if we are basically just re-cloning the same git repo.  Because:
+#   - we delete the /etc/nginx
+#   - we clone the repo
+#   - we restart nginx
+#
+# A way to fix this:
+#   - check for a file, e.g. something inside /etc/nginx/.git (try to verify it
+#     points to the right repo)?
+#   - if the check passes, then just do a "git pull", and restart only if
+#     changed
+#   - if the check fails, then do all of the above delete/clone/restart
 - name: Ensure nginx config directory is absent
   file:
       path: /etc/nginx
