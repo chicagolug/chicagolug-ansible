@@ -1,0 +1,25 @@
+---
+- hosts: all
+  vars:
+    users:
+      lincolnb:
+        name: Lincoln Bryant
+        shell: "/bin/bash"
+        key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDK0JPDyo2FJh50uJeLsqTLX5flcFdXQTwK6vjeZrzOPBpfviOCeoUUj3OkMfStr0EmWWGYOeqVDqknESIfCmgzs9SnihgpGnxgM+E8nhFEE6wzbzY5IJxdnzqYu3NXqQDjCw8uqx1XFPF1O05KdkHpJSUav0nd/Be8Of1LnZ3U8b9o9eKczulndd8kDUcd+G0w/AfyHGlngAdGyhN41SEy9tjj5IfYZdpr9R/xdIkIB7UtxxeU83zaEXWb+jbuOdhg9o3ceFHWAxig7G9veTEIS9DMccvDE55HGY5hH24AvAC5zuGa+WouAYOrtWBQzVnPa4o6Lt+Grj/hrN0r4IiD lincoln@addict"
+
+  tasks:
+  - name: add several users with pubkeys
+    user:
+      name: "{{ item.key }}"
+      comment: "{{ item.value.name }}"
+      shell: "{{ item.value.shell }}"
+      state: present
+      groups: wheel
+    with_dict: "{{ users }}"
+
+  - name: add ssh keys for users
+    authorized_key:
+      user: "{{ item.key }}"
+      state: present
+      key: "{{ item.value.key }}"
+    with_dict: "{{ users }}"
