@@ -1,15 +1,19 @@
 ---
 # tasks file for nginx
-- name: Install Nginx
+- name: Ensure nginx is installed
   yum:
       name: nginx # Does this live in EPEL?  Maybe need that repo installed.
       state: present
       update_cache: true
   notify:
       - Start Nginx
-# FIXME: This task may require /etc/nginx to be empty/absent.  Probably need to
-# make ansible ensure that before running this task.
-- name: Pull Chiglug Nginx config
+- name: Ensure nginx config directory is absent
+  file:
+      path: /etc/nginx
+      state: absent
+- name: Ensure nginx config directory is populated with ChicagoLUG config
   git:
       repo: https://github.com/chicagolug/chicagolug-nginx.git
       dest: /etc/nginx
+  notify:
+      - Restart Nginx

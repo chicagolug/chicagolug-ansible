@@ -4,3 +4,7 @@
   service:
       name: nginx
       state: started
+- name: Restart Nginx
+  service:
+      name: nginx
+      state: restarted
