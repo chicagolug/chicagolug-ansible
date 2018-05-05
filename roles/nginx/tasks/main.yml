@@ -1,5 +1,10 @@
 ---
 # tasks file for nginx
+- name: Ensure prerequisites are installed (git)
+  yum:
+      name: git
+      state: present
+      update_cache: true
 - name: Ensure nginx is installed
   yum:
       name: nginx # Does this live in EPEL?  Maybe need that repo installed.
