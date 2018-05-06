@@ -10,13 +10,14 @@
       name: git
       state: present
       update_cache: false
-- name: Ensure nginx is installed
+- name: Ensure nginx is installed (and enabled)
   yum:
       name: nginx
       state: present
       update_cache: false
   notify:
       - Start Nginx
+      - Enable Nginx
 # TODO: The below tasks are not idempotent, they will show as "changed" even
 # if we are basically just re-cloning the same git repo.  Because:
 #   - we delete the /etc/nginx
