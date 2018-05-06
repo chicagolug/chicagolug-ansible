@@ -1,15 +1,20 @@
 ---
 # tasks file for nginx
+- name: Ensure we have EPEL
+  yum:
+      name: epel-release
+      state: present
+      update_cache: true
 - name: Ensure prerequisites are installed (git)
   yum:
       name: git
       state: present
-      update_cache: true
+      update_cache: false
 - name: Ensure nginx is installed
   yum:
       name: nginx
       state: present
-      update_cache: true
+      update_cache: false
   notify:
       - Start Nginx
 # TODO: The below tasks are not idempotent, they will show as "changed" even
