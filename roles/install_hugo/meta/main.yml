@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Jim Campbell 
+  description: Install hugo static site generator 
+  company: ChicagoLUG
+
+  license: MIT 
+
+  min_ansible_version: 2.4
+
+  galaxy_tags:
+    - hugo
+    - static site generator
+
+dependencies: []
+
