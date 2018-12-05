@@ -1,0 +1,35 @@
+---
+# tasks file for install_hugo
+# For explanation of how we get Hugo's release version from the url & remove
+# the 'v' from it (e.g., v0.50 -> 0.50), see:
+# - https://docs.ansible.com/ansible/2.4/playbooks_conditionals.html#register-variables
+# - https://docs.ansible.com/ansible/2.7/user_guide/playbooks_filters.html#regular-expression-filters
+
+- name: Get the latest Hugo release version
+  local_action:
+    module: uri
+    url: https://github.com/gohugoio/hugo/releases/latest
+    method: GET
+    follow_redirects: no
+    status_code: 302
+  register: release_url
+
+- name: Download the most recent Hugo tarball release from Github
+  get_url:
+    url: "https://github.com/gohugoio/hugo/releases/download/{{ release_url.location.split('/')[7] }}/hugo_extended_{{ release_url.location.split('/')[7] | regex_replace('v') }}_Linux-64bit.tar.gz"
+    dest: "{{ ansible_user_dir }}/Downloads"
+  delegate_to: localhost
+
+- name: Extract the Hugo binary to /usr/local/bin/hugo
+  become: yes
+  unarchive:
+    remote_src: yes
+    src: "{{ ansible_user_dir }}/Downloads/hugo_extended_{{ release_url.location.split('/')[7] | regex_replace('v') }}_Linux-64bit.tar.gz"
+    dest: "/usr/local/bin/"
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
+    mode: 0755
+    exclude:
+      - LICENSE
+      - README.md
+  delegate_to: localhost

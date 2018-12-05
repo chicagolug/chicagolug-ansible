@@ -1,0 +1,9 @@
+---
+
+- hosts: localhost
+  connection: local
+  roles:
+    - install_hugo 
+  tags:
+    - install_hugo
+
